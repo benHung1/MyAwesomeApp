@@ -81,7 +81,7 @@ const Main = () => {
       <Tabs.Screen 
         name="ProfileStack" 
         component={ ProfileStack }
-        options={{ 
+        options={{
           title:"Profile",
           headerShown: false,
           tabBarIcon: (props) => <Ionic name="person" {...props} />,
