@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, Button, View } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { Text, Button, View,  StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -91,15 +91,41 @@ const Main = () => {
   );
 };
 
+
+
 const  About = () => {
+  const [data, setData] = useState([])
+  const [loading, setloading] = useState(true)
+
+  const url ="https://jsonplaceholder.typicode.com/posts";
+
+  useEffect(() => {
+    fetch(url)
+    .then((response)=>response.json())
+    .then((json)=>setData(json))
+    .catch((error)=>console.error(error))
+    .finally(()=>setloading(false));
+  }, []);
+
   return (
-    <Text>About</Text>
-  )
+    <View>
+    {
+      loading ? <Text>Loading ....</Text> :(
+        data.map((post)=>(
+          <View>
+            <Text>{post.title}</Text>
+            <Text>{post.body}</Text>
+          </View>
+        ))
+      )}
+  </View>  )
 };
 
 const Drawer = createDrawerNavigator();
 
 const App = () => {
+
+  
   return (
     <NavigationContainer>
       <Drawer.Navigator>
